@@ -7,24 +7,29 @@
     <title>Resume Builder</title>
     <style>
         body {
+            background-image: url('resumepage.jpg'); /* Replace with your image path */
+            background-size: cover; /* Scale the image to cover the entire area */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent image from repeating */
+            
+            margin: 0; /* Remove default margin */
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
-            background: linear-gradient(to right, #1995AD, #A1D6E2, #F1F1F2);
-            color: #fff;
-            text-align: center;
+            display: flex;
+            justify-content: flex-end; /* Align content to the right */
+            align-items: center; /* Vertically center the container */
+            padding-right: 30px; /* Add spacing from the right edge */
         }
 
         .container {
             max-width: 600px;
+            width: 90%; /* Make the container responsive */
             padding: 20px;
             background: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center; /* Center the text inside the container */
+            color: white;
         }
 
         h1 {
@@ -56,6 +61,30 @@
 
         button:hover {
             background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-right: 10px; /* Reduce right spacing on smaller screens */
+            }
+
+            .container {
+                width: 100%; /* Take full width on smaller screens */
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
