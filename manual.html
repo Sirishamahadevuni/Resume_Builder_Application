@@ -163,6 +163,36 @@
             font-size: 20px;
             margin: 0 10px;
         }
+        @media (max-width: 768px) {
+            .loved-by h2 {
+                font-size: 24px; /* Slightly smaller heading for mobile */
+                text-align: center; /* Center align the heading for better visibility */
+            }
+        
+            .brands {
+                display: flex;
+                flex-wrap: wrap; /* Wrap brands to the next line if they don't fit */
+                justify-content: center; /* Center align the brand logos */
+                gap: 10px; /* Space between brand links */
+            }
+        
+            .brand {
+                font-size: 14px; /* Smaller font size for mobile */
+                text-align: center;
+                display: flex;
+                align-items: center;
+                gap: 5px; /* Space between the icon and text */
+            }
+        
+            .separator {
+                display: none; /* Remove separators for cleaner mobile design */
+            }
+        
+            .brand i {
+                font-size: 18px; /* Adjust icon size for mobile */
+            }
+        }
+        
 
         @media (max-width: 768px) {
             .brands {
