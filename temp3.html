@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Resume</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #00aaff, #00ccff);
+            background-color: #f4f4f4;
+            color: #ffffff;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background: linear-gradient(to right, #00aaff, #00ccff); /* Aquatic gradient background */
+            border: 1px solid #0093c8;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, textarea, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border: 2px solid #007BFF;
+            border-radius: 6px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #0056b3;
+            background-color: #fff;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #preview-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            display: none;
+        }
+
+        #resume-preview {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #e63946;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .section {
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #e63946;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .section-content {
+            margin-top: 10px;
+        }
+
+        .skills-list {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Edit your Resume</h1>
+        <form id="resumeForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter full name" required>
+            
+            <label for="contact">Contact Info:</label>
+            <textarea id="contact" placeholder="Enter address, phone, and email" required></textarea>
+            
+            <label for="summary">Summary:</label>
+            <textarea id="summary" placeholder="Brief professional summary" required></textarea>
+            
+            <h3>Experience</h3>
+            <div id="experience">
+                <div class="exp-item">
+                    <input type="text" class="exp-title" placeholder="Position & Company" required>
+                    <input type="text" class="exp-dates" placeholder="Dates (e.g., 2020 - Present)" required>
+                    <textarea class="exp-description" placeholder="Description" required></textarea>
+                </div>
+            </div>
+            <button type="button" onclick="addExperience()">Add Experience</button>
+            
+            <h3>Education</h3>
+            <textarea id="education" placeholder="Education details (e.g., degree, university, year)" required></textarea>
+            
+            <h3>Skills</h3>
+            <textarea id="skills" placeholder="List skills separated by commas" required></textarea>
+            
+            <button type="button" onclick="generatePreview()">Preview Resume</button>
+        </form>
+    </div>
+    
+    <div id="preview-container">
+        <div id="resume-preview"></div>
+        <button onclick="downloadPDF()">Download as PDF</button>
+    </div>
+
+    <script>
+        function addExperience() {
+            const experienceDiv = document.getElementById('experience');
+            const newExp = document.createElement('div');
+            newExp.className = 'exp-item';
+            newExp.innerHTML = `
+                <input type="text" class="exp-title" placeholder="Position & Company" required>
+                <input type="text" class="exp-dates" placeholder="Dates (e.g., 2020 - Present)" required>
+                <textarea class="exp-description" placeholder="Description" required></textarea>
+            `;
+            experienceDiv.appendChild(newExp);
+        }
+
+        function generatePreview() {
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+            const summary = document.getElementById('summary').value;
+            const education = document.getElementById('education').value;
+            const skills = document.getElementById('skills').value;
+            const experiences = document.querySelectorAll('.exp-item');
+
+            let experienceHTML = '';
+            experiences.forEach(exp => {
+                const title = exp.querySelector('.exp-title').value;
+                const dates = exp.querySelector('.exp-dates').value;
+                const description = exp.querySelector('.exp-description').value;
+                experienceHTML += `
+                    <div class="section-content">
+                        <strong>${title}</strong> <em>(${dates})</em>
+                        <p>${description}</p>
+                    </div>
+                `;
+            });
+
+            const skillsList = skills.split(',').map(skill => `<li>${skill.trim()}</li>`).join('');
+
+            const previewContainer = document.getElementById('preview-container');
+            const preview = document.getElementById('resume-preview');
+            preview.innerHTML = `
+                <div class="header">
+                    <h1>${name}</h1>
+                    <p class="contact-info">${contact}</p>
+                </div>
+                <div class="section">
+                    <div class="section-title">Summary</div>
+                    <p>${summary}</p>
+                </div>
+                <div class="section">
+                    <div class="section-title">Experience</div>
+                    ${experienceHTML}
+                </div>
+                <div class="section">
+                    <div class="section-title">Education</div>
+                    <p>${education}</p>
+                </div>
+                <div class="section">
+                    <div class="section-title">Skills</div>
+                    <ul class="skills-list">${skillsList}</ul>
+                </div>
+            `;
+            previewContainer.style.display = 'block';
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('resume-preview');
+            const opt = {
+                margin: 1,
+                filename: 'resume.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>

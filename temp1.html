@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Resume</title>
+    <style>
+        /* General body styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #00aaff, #00ccff); /* Aquatic gradient background */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #00b4d8, #00aaff); /* Aquatic gradient for container */
+            border: 1px solid #0093c8;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        /* Form label styling */
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+            color: hwb(0 100% 0%);
+            font-size: 14px;
+        }
+
+        /* Form input and textarea styling */
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #007BFF;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #333;
+            background-color: #f8f8f8;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #0056b3; /* Darker blue on focus */
+            background-color: #fff;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* Button group styles */
+        .button-group {
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Resume preview section styling */
+        #resume-preview {
+            margin-top: 30px;
+            border-top: 2px solid #007BFF;
+            padding-top: 20px;
+            display: none;
+        }
+
+        #resume-preview h2, #resume-preview h3 {
+            color: #007BFF;
+        }
+
+        #resume-preview p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        /* Styling for the preview section */
+        #resume-preview {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            button {
+                width: 100%;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Your Resume</h1>
+        <form id="resumeForm">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name" required>
+
+            <label for="contact">Contact Information</label>
+            <textarea id="contact" placeholder="Enter your phone, email, address" required></textarea>
+
+            <label for="profile">Profile</label>
+            <textarea id="profile" placeholder="Write your professional profile" required></textarea>
+
+            <label for="experience">Experience</label>
+            <textarea id="experience" placeholder="Enter your professional experience" required></textarea>
+
+            <label for="education">Education</label>
+            <textarea id="education" placeholder="Enter your education details" required></textarea>
+
+            <label for="skills">Skills & Abilities</label>
+            <textarea id="skills" placeholder="List your skills and abilities" required></textarea>
+
+            <label for="activities">Activities and Interests</label>
+            <textarea id="activities" placeholder="List your activities and interests" required></textarea>
+
+            <div class="button-group">
+                <button type="button" onclick="previewResume()">Preview Resume</button>
+                <button type="button" onclick="downloadAsPDF()">Download as PDF</button>
+            </div>
+        </form>
+
+        <div id="resume-preview">
+            <h2 id="previewName"></h2>
+            <p id="previewContact"></p>
+            <h3>Profile</h3>
+            <p id="previewProfile"></p>
+            <h3>Experience</h3>
+            <p id="previewExperience"></p>
+            <h3>Education</h3>
+            <p id="previewEducation"></p>
+            <h3>Skills & Abilities</h3>
+            <p id="previewSkills"></p>
+            <h3>Activities and Interests</h3>
+            <p id="previewActivities"></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        function previewResume() {
+            // Fetch input data
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+            const profile = document.getElementById('profile').value;
+            const experience = document.getElementById('experience').value;
+            const education = document.getElementById('education').value;
+            const skills = document.getElementById('skills').value;
+            const activities = document.getElementById('activities').value;
+
+            // Populate the preview section
+            document.getElementById('previewName').textContent = name;
+            document.getElementById('previewContact').textContent = contact;
+            document.getElementById('previewProfile').textContent = profile;
+            document.getElementById('previewExperience').textContent = experience;
+            document.getElementById('previewEducation').textContent = education;
+            document.getElementById('previewSkills').textContent = skills;
+            document.getElementById('previewActivities').textContent = activities;
+
+            // Show the preview section
+            document.getElementById('resume-preview').style.display = 'block';
+        }
+
+        async function downloadAsPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+            const profile = document.getElementById('profile').value;
+            const experience = document.getElementById('experience').value;
+            const education = document.getElementById('education').value;
+            const skills = document.getElementById('skills').value;
+            const activities = document.getElementById('activities').value;
+
+            // Add data to PDF
+            pdf.setFontSize(20);
+            pdf.text(name, 10, 20);
+            pdf.setFontSize(12);
+            pdf.text("Contact Information:", 10, 30);
+            pdf.text(contact, 10, 40);
+            pdf.text("Profile:", 10, 60);
+            pdf.text(profile, 10, 70);
+            pdf.text("Experience:", 10, 90);
+            pdf.text(experience, 10, 100);
+            pdf.text("Education:", 10, 120);
+            pdf.text(education, 10, 130);
+            pdf.text("Skills & Abilities:", 10, 150);
+            pdf.text(skills, 10, 160);
+            pdf.text("Activities and Interests:", 10, 180);
+            pdf.text(activities, 10, 190);
+
+            // Save the PDF
+            pdf.save("resume.pdf");
+        }
+    </script>
+</body>
+</html>

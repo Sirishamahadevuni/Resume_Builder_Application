@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit and Download Resume</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #00aaff, #00ccff); /* Blue background for the whole page */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #00bcd4; /* Aquatic background color for the container */
+            padding: 20px;
+            background: linear-gradient(to right, #00b4d8, #00aaff);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #ffffff; /* Darker blue for labels */
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            background-color: #fff;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .button-group {
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #resume-preview {
+            margin-top: 30px;
+            display: none;
+            border-top: 2px solid #080808;
+            padding-top: 20px;
+        }
+
+        #resume-preview .resume-container {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #resume-preview .resume-left {
+            width: 40%;
+            padding: 20px;
+            background-color: rgba(196, 191, 191, 0.688);
+            color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        #resume-preview .resume-right {
+            width: 60%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #resume-preview h2, #resume-preview h3 {
+            color: #050505;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        #resume-preview p, #resume-preview ul {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            #resume-preview .resume-left, #resume-preview .resume-right {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Your Resume</h1>
+        <form id="resumeForm">
+            <!-- Personal Info -->
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" required>
+            
+            <label for="jobTitle">Job Title</label>
+            <input type="text" id="jobTitle" placeholder="Enter your job title" required>
+
+            <label for="profile">Profile</label>
+            <textarea id="profile" placeholder="Write your professional profile" required></textarea>
+
+            <!-- Contact Information -->
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" placeholder="Enter your phone number" required>
+            
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email address" required>
+
+            <label for="website">Website/Portfolio</label>
+            <input type="text" id="website" placeholder="Enter your website or portfolio link">
+
+            <!-- Experience -->
+            <label for="experience">Experience</label>
+            <textarea id="experience" placeholder="Enter your work experience details" required></textarea>
+
+            <!-- Skills -->
+            <label for="skills">Skills</label>
+            <textarea id="skills" placeholder="Enter your key skills" required></textarea>
+
+            <!-- Education -->
+            <label for="education">Education</label>
+            <textarea id="education" placeholder="Enter your education details" required></textarea>
+
+            <div class="button-group">
+                <button type="button" onclick="previewResume()">Preview Resume</button>
+                <button type="button" onclick="downloadResume()">Download as PDF</button>
+            </div>
+        </form>
+
+        <!-- Resume Preview -->
+        <div id="resume-preview">
+            <div id="resume-content" class="resume-container">
+                <div class="resume-left">
+                    <h2 id="previewName"></h2>
+                    <p id="previewJobTitle"></p>
+                    <h3>Contact</h3>
+                    <p id="previewPhone"></p>
+                    <p id="previewEmail"></p>
+                    <p id="previewWebsite"></p>
+                </div>
+                <div class="resume-right">
+                    <h3>Profile</h3>
+                    <p id="previewProfile"></p>
+                    <h3>Experience</h3>
+                    <p id="previewExperience"></p>
+                    <h3>Skills</h3>
+                    <p id="previewSkills"></p>
+                    <h3>Education</h3>
+                    <p id="previewEducation"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+        function previewResume() {
+            // Fetch form values
+            const fullName = document.getElementById('fullName').value;
+            const jobTitle = document.getElementById('jobTitle').value;
+            const profile = document.getElementById('profile').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const website = document.getElementById('website').value;
+            const experience = document.getElementById('experience').value;
+            const skills = document.getElementById('skills').value;
+            const education = document.getElementById('education').value;
+
+            // Populate preview section
+            document.getElementById('previewName').textContent = fullName;
+            document.getElementById('previewJobTitle').textContent = jobTitle;
+            document.getElementById('previewProfile').textContent = profile;
+            document.getElementById('previewPhone').textContent = `Phone: ${phone}`;
+            document.getElementById('previewEmail').textContent = `Email: ${email}`;
+            document.getElementById('previewWebsite').textContent = `Website: ${website}`;
+            document.getElementById('previewExperience').textContent = experience;
+            document.getElementById('previewSkills').textContent = skills;
+            document.getElementById('previewEducation').textContent = education;
+
+            // Show preview section
+            document.getElementById('resume-preview').style.display = 'block';
+        }
+
+        function downloadResume() {
+            const element = document.getElementById('resume-content');
+            const options = {
+                margin: 1,
+                filename: 'resume.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(options).from(element).save();
+        }
+    </script>
+</body>
+</html>

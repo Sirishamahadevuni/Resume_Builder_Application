@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Template Selector</title>
+    <style>
+        /* General body styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #0099ff, #00ccff); /* Blue gradient background */
+            color: #333;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(145deg, #00aaff, #0099cc); /* Aquatic gradient background */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            color: white; /* White text for contrast */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #fff; /* White color for header text */
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        /* Template gallery layout */
+        .template-gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        /* Template card styles */
+        .template-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Template card hover effect */
+        .template-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Template image styles */
+        .template-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Button styles */
+        .template-card button {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        /* Button hover effect */
+        .template-card button:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .template-gallery {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .template-card {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select a Resume Template</h1>
+        <div class="template-gallery">
+            <!-- Template 1 -->
+            <div class="template-card">
+                <img src="temp01.png" alt="Classic Resume">
+                <button onclick="window.location.href='temp1.html'">Edit Classic Resume</button>
+            </div>
+            <!-- Template 2 -->
+            <div class="template-card">
+                <img src="temp02.png" alt="Modern Resume">
+                <button onclick="window.location.href='temp2.html'">Edit Modern Resume</button>
+            </div>
+            <!-- Template 3 -->
+            <div class="template-card">
+                <img src="temp03.png" alt="Creative Resume">
+                <button onclick="window.location.href='temp3.html'">Edit Creative Resume</button>
+            </div>
+            <!-- Template 4 -->
+            <div class="template-card">
+                <img src="temp04.png" alt="Classic Resume">
+                <button onclick="window.location.href='temp4.html'">Edit Formal Resume</button>
+            </div> 
+        </div>
+    </div>
+</body>
+</html>
